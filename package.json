@@ -1,0 +1,16 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "an api for the website",
+  "main": "api.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ViNoS",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "git": "^0.1.5",
+    "node-fl": "0.0.3"
+  }
+}
