@@ -6,8 +6,10 @@ const cors = require("cors");
 app.use(express.json());
 app.use(cors());
 
+const url = "https://thisismyapi.herokuapp.com/api/posts";
+
 const corsOptions = {
-  origin: null,
+  origin: url,
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   preflightContinue: false,
   optionsSuccessStatus: 200,
