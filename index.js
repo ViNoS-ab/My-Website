@@ -7,7 +7,7 @@ app.use(express.json());
 app.use(cors());
 
 const corsOptions = {
-  origin: "https://slatier-challenge.000webhostapp.com",
+  origin: null,
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   preflightContinue: false,
   optionsSuccessStatus: 200,

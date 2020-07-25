@@ -1,13 +1,1 @@
-[
-  { "id": 1, "content": "post1" },
-  { "id": 2, "content": "hmmmmm" },
-  {
-    "id": 3,
-    "content": "<p><img src=\"https://cdn.pixabay.com/photo/2017/08/30/01/05/milky-way-2695569_960_720.jpg\" alt=\"image\" onerror=\"window.mrdjaEmbeds(this)\" title=\"image\"></p>\n"
-  },
-  { "id": 4, "content": "<p>this is a new post</p>\n" },
-  {
-    "id": 5,
-    "content": "<h1><strong>aaaaa how can host my api</strong></h1>\n"
-  }
-]
+[{"id":1,"content":"post1"},{"id":2,"content":"hmmmmm"},{"id":3,"content":"<p><img src=\"https://cdn.pixabay.com/photo/2017/08/30/01/05/milky-way-2695569_960_720.jpg\" alt=\"image\" onerror=\"window.mrdjaEmbeds(this)\" title=\"image\"></p>\n"},{"id":4,"content":"<p>this is a new post</p>\n"},{"id":5,"content":"<h1><strong>aaaaa how can host my api</strong></h1>\n"},{"id":6,"content":"<h1><strong>yeeeeey my api works</strong></h1>\n"}]

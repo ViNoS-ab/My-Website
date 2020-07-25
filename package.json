@@ -15,7 +15,8 @@
     "node-fl": "0.0.3",
     "joi": "17.1.1",
     "nodemon": "2.0.4",
-    "express": "4.17.1"
+    "express": "4.17.1",
+    "fs": "0.0.1-security"
   },
   "engines": {
     "node": "12.13.1"
