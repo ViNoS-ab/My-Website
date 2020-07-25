@@ -34,11 +34,6 @@ app.post("/api/posts", cors(corsOptions), (req, res) => {
     return;
   }
 
-  if (result.error) {
-    res.status(400).send(result.error.details[0].message);
-    return;
-  }
-
   const post = {
     id: parsedPosts.length + 1,
     content: req.body.content,
