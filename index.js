@@ -16,7 +16,7 @@ const corsOptions = {
 const posts = fs.readFileSync("./posts/posts.json");
 const parsedPosts = JSON.parse(posts);
 
-app.get("/", (req, res) => {
+app.get("/api/posts", (req, res) => {
   res.send(parsedPosts);
   console.log(req.statusCode);
 });
