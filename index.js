@@ -1,4 +1,3 @@
-const Joi = require("joi");
 const express = require("express");
 const app = express();
 const fs = require("fs");
@@ -30,11 +29,10 @@ app.get("/api/posts/:id", (req, res) => {
 });
 
 app.post("/api/posts", cors(corsOptions), (req, res) => {
-  const schema = {
-    content: Joi.string().min(3).required(),
-  };
-
-  const result = Joi.validate(req.body, schema);
+  if (!req.body.content || req.body.content.length < 3) {
+    res.status(400).send("you must send a content with 10 characters at least");
+    return;
+  }
 
   if (result.error) {
     res.status(400).send(result.error.details[0].message);
