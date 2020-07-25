@@ -6,7 +6,7 @@ const cors = require("cors");
 app.use(express.json());
 app.use(cors());
 
-const url = "https://thisismyapi.herokuapp.com/api/posts";
+const url = "https://slatier-challenge.000webhostapp.com";
 
 const corsOptions = {
   origin: url,
