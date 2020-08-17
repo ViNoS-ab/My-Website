@@ -22,10 +22,11 @@ const signRptPsw = document.getElementById("signRptPsw");
 
 let postId;
 
-const url1 = "https://thisismyapi.herokuapp.com/api/posts";
-const url = "http://localhost:3000/api/posts/";
-const urllgn = "http://localhost:3000/users/login/";
-const urlsign = "http://localhost:3000/users/";
+const url1 = "https://thisismyapi.herokuapp.com";
+const url = "http://localhost:3000/api/posts";
+const urlPosts = "/api/posts/";
+const urllgn = "/users/login/";
+const urlsign = "/users/";
 
 const last = (array, n) => {
   if (array == null) return void 0;
@@ -70,7 +71,7 @@ submit.addEventListener("click", async (event) => {
 
 const submitPost = async (data) => {
   try {
-    let request = await fetch(url, {
+    let request = await fetch(url1 + urlPosts, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -98,7 +99,7 @@ const submitPost = async (data) => {
 // this is getting the posts from json file part
 const GetPosts = async () => {
   try {
-    let request = await fetch(url, {
+    let request = await fetch(url1 + urlPosts, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -194,7 +195,7 @@ const GetPosts = async () => {
       // this is delete posts part
       const DeletePost = async () => {
         try {
-          let request = await fetch(url + post.id, {
+          let request = await fetch(url1 + urlPosts + post.id, {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",
@@ -275,7 +276,7 @@ if (window.scrollY <= 250) {
 //this is updatinhg the post part (it is related to some few things up)
 const EditPost = async (data) => {
   try {
-    let request = await fetch(url + postId, {
+    let request = await fetch(url1 + urlPosts + postId, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -344,7 +345,7 @@ const LogIn = async () => {
   };
 
   try {
-    let request = await fetch(urllgn, {
+    let request = await fetch(url1 + urllgn, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -383,7 +384,7 @@ const signUp = async () => {
   };
 
   try {
-    let request = await fetch(urlsign, {
+    let request = await fetch(url1 + urlsign, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
