@@ -1,0 +1,38 @@
+[
+  {
+    "email": "my email",
+    "password": "$2b$10$1LBmnp3UWTEonYSbdUz3D.Mm.fFNCD2YAfd0xOOy5gYNf8gf71i/i"
+  },
+  {
+    "email": "another email",
+    "password": "$2b$10$iuXpYU7IbGxY.iAfFmuIre8jJSJgCFqZMnkmZFBdXSOGA89X.oZ0."
+  },
+  {
+    "email": "new email",
+    "password": "$2b$10$Pz9yyBWaDcIaUt9eDXrDxOztO3aC32lPWh39JWp5lRrHmFmYEHSt."
+  },
+  {
+    "email": "email@exapmle.com",
+    "password": "$2b$10$TeUAQhNj3UYljA8TpyMdRu7CvSegeRnKu7NWoaC/ua/byJdRIwpW."
+  },
+  {
+    "email": "email@exemple.me",
+    "password": "$2b$10$TIZw14UF/O7G97/M0BSEbOrvhZGhF4kaVlT7AbeU6C8O5pDtCUW6i"
+  },
+  {
+    "email": "new@exemple",
+    "password": "$2b$10$FGJGSfwatXITr74EVnYNpuMk7gXoNUI9imRw2pWDZhEFGhmy3ZT9O"
+  },
+  {
+    "email": "exemple@exemple.me",
+    "password": "$2b$10$rGGBQAhRq6e2nJmkPaGf2O0bffPBqGWmWiV8NTtlSgvxAFblJRJve"
+  },
+  {
+    "email": "test@email.com",
+    "password": "$2b$10$1sLWLsS8qc4zQP20DxPJEedJrXGVAWCnAkqBe6TDZG45Oq3Lo06Q."
+  },
+  {
+    "email": "anothertest@email.com",
+    "password": "$2b$10$BJoK0S.c4ep3XwxyytNES.V1BexswHPVip2Xtq1RAscJZv5SQ54e2"
+  }
+]
