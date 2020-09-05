@@ -1,6 +1,6 @@
 const express = require("express");
-const session = require("express-session");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const app = express();
 const fs = require("fs");
 const cors = require("cors");
@@ -112,7 +112,7 @@ app.put("/api/posts/:id", cors(corsOptions), (req, res) => {
 app.post("/users", cors(corsOptions), async (req, res) => {
   for (let i = 0; i < emailArry.length; i++) {
     if (emailArry[i] === req.body.email) {
-      return res.status(400).send("this Email is already taken");
+      return res.status(400).send("This Email is already taken");
     }
   }
   console.log(req.body.email);
@@ -132,28 +132,33 @@ app.post("/users", cors(corsOptions), async (req, res) => {
     });
     res.send("you signed up !!");
   } catch (error) {
-    res.status(500).send("cannot find user");
+    res.status(500).send("An error occured");
   }
 });
 //log in
 app.post("/users/login", cors(corsOptions), async (req, res) => {
   const user = parsedUsers.find((user) => user.email === req.body.email);
   if (user == null) {
-    return res.status(404).send("cannot find user");
+    return res.status(404).send({ text: "Cannot find user" }); //sending responses as json to avoid errors and additional work on the main js file
   }
 
   try {
     if (await bcrypt.compare(req.body.password, user.password)) {
-      res.send("you are logged in ");
+      res.send({
+        text: "you are logged in ",
+        email: user.email,
+      });
       console.log(user.email + " has logged in");
     } else {
-      res.send("Wrong password");
+      res.send({ text: "Wrong password" });
       console.log(user.email + " typed a wrong pw");
     }
   } catch (error) {
-    res.status(500).send("an error occured");
+    res.status(500).send({ text: "An error occured" });
   }
 });
 // PORT
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`listnening on Port ${port}...`));
+
+

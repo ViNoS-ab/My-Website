@@ -3,7 +3,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Demo Website</title>
     <meta name="description" content="A website for Hadjer" />
     <meta name="author" content="Abderrahman" />
@@ -68,22 +68,29 @@
             name="uname"
             id="lgnEmail"
             pattern=".+@.+..+"
+            autocomplete="email"
             required
           />
-
+          <p id="wrongEmail"></p>
           <label for="psw"><b>Password</b></label>
           <input
             type="password"
             placeholder="Enter Password"
             name="psw"
             id="lgnPsw"
+            autocomplete="current-password"
             required
           />
-
+          <p id="wrongPw"></p>
           <button class="lgnbutton" id="login">Login</button>
           <label>
-            <input type="checkbox" checked="checked" name="remember" /> Remember
-            me
+            <input
+              type="checkbox"
+              checked="checked"
+              name="remember"
+              id="rememberLgn"
+            />
+            Remember me
           </label>
         </div>
       </form>
@@ -112,15 +119,17 @@
             name="email"
             id="signEmail"
             pattern=".+@.+..+"
+            autocomplete="email"
             required
           />
-
+          <p id="takenEmail"></p>
           <label for="signpsw"><b>Password</b></label>
           <input
             type="password"
             placeholder="Enter Password"
             name="signpsw"
             id="signPsw"
+            autocomplete="new-password"
             required
           />
 
@@ -130,6 +139,7 @@
             placeholder="Repeat Password"
             name="psw-repeat"
             id="signRptPsw"
+            autocomplete="new-password"
             required
           />
 
@@ -138,14 +148,15 @@
               type="checkbox"
               checked="checked"
               name="remember"
-              style="margin-bottom: 15px;"
+              style="margin-bottom: 15px"
+              id="rememberSign"
             />
             Remember me
           </label>
 
           <p>
             By creating an account you agree to our
-            <a href="#" style="color: dodgerblue;">Terms & Privacy</a>.
+            <a href="#" style="color: dodgerblue">Terms & Privacy</a>.
           </p>
 
           <div class="clearfix">
@@ -156,36 +167,40 @@
             >
               Cancel
             </button>
-            <button class="signupbtn signbutton" id="signUp">
-              Sign Up
-            </button>
+            <button class="signupbtn signbutton" id="signUp">Sign Up</button>
           </div>
         </div>
       </form>
     </div>
 
     <header>
+
       <div class="boundTop">
         <ul class="navBar">
           <li>Poser une question à</li>
           <li>azertyuiopqsdf</li>
           <li>azertyuiopqsdf</li>
           <li class="lastLi">azertyuiopqsdf</li>
-        </ul>
-        <div class="loginBtn">
-          <span class="loginSpan">
-            <span class="loginSvg"></span>
-            <p>Log in</p></span
-          >
 
-          <span class="signupSpan">Sign up</span>
-        </div>
+          <li id="loginBtn">
+            <span class="loginSpan">
+              <span class="loginSvg"></span>
+              <p>Log in</p></span
+            >
+            <span class="signupSpan">Sign up</span>
+            <!-- <ul id="acc">
+              <li id="mailName">email</li>
+              <li id="logout"><i class="fas fa-sign-out-alt"></i> Sign out</li>
+            </ul> -->
+          </li>
+        </ul>
       </div>
+
       <div class="middleBound">
         <div class="upperMiddleBound">
           <div class="logo">
             <img src="images/logo.png" alt="" />
-            <h1>This is my first website</h1>
+            <h1>This is my First website</h1>
           </div>
 
           <form class="SearchBox">

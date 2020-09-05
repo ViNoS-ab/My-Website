@@ -161,7 +161,7 @@
         name: "Close",
         icon: "&#10006;",
         css_class: "markdown-editor-button",
-        action: close,
+        action: closeMD, // this func is not in this file
       },
     ];
 
@@ -755,15 +755,7 @@
       }
       previewUpdate();
     }
-    //For close the MD function
-    function close() {
-      editBtn.setAttribute("hidden", "");
-      MDE.setAttribute("hidden", "");
-      for (let i = 0; i < div.length; i++) {
-        div[i].style.opacity = "1";
-      }
-      postId = null;
-    }
+
     /***************************************************************************\
         *****************************************************************************
         \***************************************************************************/

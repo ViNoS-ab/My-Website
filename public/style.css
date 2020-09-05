@@ -3,6 +3,7 @@ html {
   display: flex;
   scroll-behavior: smooth;
 }
+
 body {
   position: relative;
   width: 100%;
@@ -13,6 +14,7 @@ body {
 }
 header {
   justify-content: center;
+  margin: 0;
 }
 
 /*.....................
@@ -20,7 +22,6 @@ header {
   :...................:*/
 div.boundTop {
   padding: 0;
-  background-color: #3c3c3c;
   color: white;
   display: flex;
 }
@@ -31,6 +32,9 @@ ul.navBar {
   margin: 0px;
   position: relative;
   padding-left: 10%;
+  background-color: #3c3c3c;
+  display: flex;
+  width: 100%;
 }
 
 ul.navBar li {
@@ -46,7 +50,7 @@ ul.navBar li {
 li.lastLi {
   border: none !important;
 }
-.loginBtn {
+#loginBtn {
   display: flex;
   font-family: "Roboto", sans-serif;
   white-space: nowrap;
@@ -89,6 +93,66 @@ li.lastLi {
 .signupSpan:active {
   background: rgb(4, 4, 163);
 }
+
+#resTxt,
+#accName {
+  margin: 0;
+}
+#accName {
+  cursor: pointer;
+}
+#acc {
+  position: absolute;
+  list-style: none;
+  background: #f1f1f1;
+  top: 100%;
+  color: #242424;
+  box-shadow: 0 3px 10px rgba(89, 105, 129, 0.3), 0 1px 2px rgba(0, 0, 0, 0.05),
+    0 0 0 1px rgba(89, 105, 129, 0.1);
+  margin: 0;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+  opacity: 0;
+  transition: 0.4s;
+}
+#acc li {
+  margin: 3px;
+  padding: 5px;
+  border: none;
+}
+
+#logout:hover {
+  background: #ccc;
+}
+#logout {
+  border-top: black solid 1px;
+  border-width: 2px;
+  cursor: pointer;
+}
+@media only screen and (orientation: portrait), (max-width: 680px) {
+  .navBar {
+    display: flex;
+    flex-direction: column;
+  }
+  .boundTop {
+    position: absolute;
+    z-index: 1;
+  }
+  .signupSpan {
+    margin: 0 0;
+  }
+  #loginBtn {
+    flex-direction: column;
+    padding: 0;
+    margin-left: 10px;
+    align-items: normal;
+    justify-content: normal;
+  }
+}
 /*........................
   : the middle bound part:
   :......................:*/
@@ -114,26 +178,32 @@ div.logo img {
 
 /*search box*/
 form.SearchBox {
-  position: absolute;
+  position: relative;
   display: flex;
-  top: 20%;
-  left: 70%;
+  top: -72px;
+  left: 80%;
   transform: translate(-50%, -50%);
   background: #34495e;
   height: 25px;
   border-radius: 25px;
   padding: 10px;
   margin-left: 40px;
+  width: 200px;
 }
 
+form.SearchBox:hover {
+  transition: 0.4s;
+  width: 215px;
+}
 form.SearchBox:hover > .search-txt {
-  width: 200px;
+  width: 175px;
   padding: 0 6px;
   background: white;
   color: black;
   border-radius: 4px;
   border-top-left-radius: 25px;
   border-bottom-left-radius: 25px;
+  display: inline-block;
 }
 form.SearchBox:hover > .search-btn {
   background: white;
@@ -162,7 +232,16 @@ input.search-txt {
   font-size: 16px;
   transition: 0.4s;
   line-height: 25px;
-  width: 200px;
+  width: 175px;
+}
+@media only screen and (orientation: portrait), (max-width: 680px) {
+  form.SearchBox {
+    width: 25px;
+    height: 25px;
+  }
+  input.search-txt {
+    display: none;
+  }
 }
 /*.......................
   : navigation List part :
@@ -260,7 +339,12 @@ ul#posts {
   border-radius: 10px;
   position: relative;
 }
-
+@media only screen and (max-width: 700px) {
+  .postContainer {
+    margin: auto 10px;
+    margin-bottom: 20px;
+  }
+}
 .scrollDiv {
   overflow-y: auto;
   overflow-x: hidden;
@@ -531,7 +615,13 @@ span.psw {
   color: red;
   cursor: pointer;
 }
-
+#wrongPw,
+#wrongEmail,
+#takenEmail {
+  color: red;
+  font-size: 14px;
+  margin: 1px;
+}
 /* Add Zoom Animation */
 .animate {
   -webkit-animation: animatezoom 0.6s;

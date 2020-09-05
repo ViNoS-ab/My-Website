@@ -19,11 +19,15 @@ const signup = document.getElementById("signUp");
 const signEmail = document.getElementById("signEmail");
 const signPsw = document.getElementById("signPsw");
 const signRptPsw = document.getElementById("signRptPsw");
+const wrongPw = document.getElementById("wrongPw");
+const wrongEmail = document.getElementById("wrongEmail");
+const takenEmail = document.getElementById("takenEmail");
+const resText = document.getElementById("resTxt");
 
 let postId;
 
-const url1 = "https://thisismyapi.herokuapp.com";
-const url = "http://localhost:3000/api/posts";
+const url1 = "https://just-demo-website.herokuapp.com";
+const url = "http://localhost:3000";
 const urlPosts = "/api/posts/";
 const urllgn = "/users/login/";
 const urlsign = "/users/";
@@ -56,6 +60,8 @@ function closeMD() {
   }
 }
 newPost.addEventListener("click", () => {
+  const textArea = document.getElementById("input");
+  textArea.value = "";
   openMd();
 });
 
@@ -71,7 +77,7 @@ submit.addEventListener("click", async (event) => {
 
 const submitPost = async (data) => {
   try {
-    let request = await fetch(url1 + urlPosts, {
+    let request = await fetch(urlPosts, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -99,7 +105,7 @@ const submitPost = async (data) => {
 // this is getting the posts from json file part
 const GetPosts = async () => {
   try {
-    let request = await fetch(url1 + urlPosts, {
+    let request = await fetch(urlPosts, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -195,7 +201,7 @@ const GetPosts = async () => {
       // this is delete posts part
       const DeletePost = async () => {
         try {
-          let request = await fetch(url1 + urlPosts + post.id, {
+          let request = await fetch(urlPosts + post.id, {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",
@@ -216,12 +222,15 @@ const GetPosts = async () => {
         }
       });
       Edit.addEventListener("click", () => {
+        const thisPost = document.getElementById("liDiv" + post.id);
+        const textArea = document.getElementById("input");
+        textArea.value = thisPost.textContent;
         setTimeout(() => {
           openMd();
         }, 1);
 
-        editBtn.removeAttribute("hidden");
         postId = post.id;
+        editBtn.removeAttribute("hidden");
       });
     }
   } catch (err) {
@@ -276,7 +285,7 @@ if (window.scrollY <= 250) {
 //this is updatinhg the post part (it is related to some few things up)
 const EditPost = async (data) => {
   try {
-    let request = await fetch(url1 + urlPosts + postId, {
+    let request = await fetch(urlPosts + postId, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -338,14 +347,40 @@ signupSpan.addEventListener("click", () => {
 
 //login system
 
-const LogIn = async () => {
+const LogIn = () => {
   const loginInput = {
     email: lgnEmail.value,
     password: lgnPsw.value,
   };
+  LogInFunc(loginInput).then(() => {
+    // Logout
+    wrongEmail.textContent = "";
+    wrongPw.textContent = "";
+    const logoutBtn = document.getElementById("logout");
+    const acc = document.getElementById("acc");
+    const accName = document.getElementById("accName");
+    logoutBtn.addEventListener("click", () => {
+      acc.remove();
+      accName.remove();
+      loginSpan.style.display = "flex";
+      signupSpan.style.display = "block";
+      setCookie("email=", "");
+      setCookie("password=", "");
+    });
+    //show the logout and email
+    accName.addEventListener("click", () => {
+      acc.style.opacity = "1";
+      acc.focus();
+    });
+    acc.addEventListener("blur", () => {
+      acc.style.opacity = "0";
+    });
+  });
+};
 
+const LogInFunc = async (loginInput) => {
   try {
-    let request = await fetch(url1 + urllgn, {
+    let request = await fetch(urllgn, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -355,17 +390,55 @@ const LogIn = async () => {
       body: JSON.stringify(loginInput),
     });
     if (request.status == 200) {
-      response = await request.text();
-      alert(response);
-
-      if (response == "you are logged in ") {
+      response = await request.json();
+      if (response.text == "you are logged in ") {
         Lmodal.style.display = "none";
-      }
-    } else {
-      response = await request.text();
+        loginSpan.style.display = "none";
+        signupSpan.style.display = "none";
 
-      alert(request.statusText + " : " + response);
-      console.log(request.status + request.statusText + " : " + response);
+        const lgnAndSignDiv = document.querySelector("#loginBtn");
+        const accName = document.createElement("p");
+        lgnAndSignDiv.appendChild(accName);
+        accName.id = "accName";
+        accName.innerHTML =
+          '<i class="fas fa-user"></i>' + response.email.split("@", 1);
+        const acc = document.createElement("ul");
+        const mailName = document.createElement("li");
+        const logout = document.createElement("li");
+        acc.setAttribute("tabindex", "0");
+        acc.appendChild(mailName);
+        acc.appendChild(logout);
+        lgnAndSignDiv.appendChild(acc);
+        mailName.innerHTML = '<p id="resTxt"> ' + response.email + "</p>";
+        logout.innerHTML = '<i class="fas fa-sign-out-alt"></i> Sign out';
+        mailName.id = "mailName";
+        acc.id = "acc";
+        logout.id = "logout";
+
+        if (document.getElementById("rememberLgn").checked === true) {
+          setCookie("email=", loginInput.email, 365 * 3);
+          setCookie("password=", loginInput.password, 365 * 3);
+        } else {
+          setCookie("email=", loginInput.email);
+          setCookie("password=", loginInput.password);
+        }
+
+        if (getCookie("loggedB4") !== "=yes") {
+          setCookie("loggedB4=", "yes");
+          alert(response.text);
+        }
+        console.log(getCookie("loggedB4") != "=yes");
+      }
+      if (response.text == "Wrong password")
+        wrongPw.textContent = response.text;
+    } else {
+      response = await request.json();
+      if (response.text == "Cannot find user") {
+        wrongEmail.textContent = response.text;
+      } else {
+        alert(request.statusText + " : " + response.text);
+        console.log(request.status + request.statusText + " : " + response);
+      }
     }
     document.getElementById("logInForm").reset();
   } catch (err) {
@@ -382,9 +455,9 @@ const signUp = async () => {
     email: signEmail.value,
     password: signPsw.value,
   };
-
+  takenEmail.textContent = "";
   try {
-    let request = await fetch(url1 + urlsign, {
+    let request = await fetch(urlsign, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -397,11 +470,16 @@ const signUp = async () => {
       alert(response);
       if (response == "you signed up !!") {
         Smodal.style.display = "none";
+        if (document.getElementById("rememberSign").checked === true) {
+          setCookie("email=", signUpinput.email, 365 * 3);
+          setCookie("password=", signUpinput.password, 365 * 3);
+          LogInFunc(signUpinput);
+        }
       }
     } else {
       response = await request.text();
-
-      alert(request.statusText + " : " + response);
+      takenEmail.textContent = response;
+      //alert(request.statusText + " : " + response);
       console.log(request.status + request.statusText + " : " + response);
     }
     document.getElementById("signUpForm").reset();
@@ -409,7 +487,8 @@ const signUp = async () => {
     console.log(err);
   }
 };
-/// testing
+
+// this is to make the site lunch with the api
 class App {
   init() {
     this.render();
@@ -419,3 +498,68 @@ class App {
 
 let app = new App();
 app.init();
+//function to set the cookie
+function setCookie(cname, cvalue, exdays) {
+  if (exdays) {
+    const d = new Date();
+    d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+    const expires = "expires=" + d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  } else {
+    document.cookie = cname + "=" + cvalue + ";path=/";
+  }
+}
+//func to get the cookie
+function getCookie(cname) {
+  const name = cname + "=";
+  const decodedCookie = decodeURIComponent(document.cookie);
+  const ca = decodedCookie.split(";");
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == " ") {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+//func to check for cookie
+function checkCookie() {
+  const userE = getCookie("email");
+  const userP = getCookie("password");
+  const loginInput = {
+    email: userE.split("=")[1], // spliting with the equal will give us an array ["" , "cookieValue"] b4 splitting that gives "=cookieValue"
+    password: userP.split("=")[1],
+  };
+  if (userE != "" && userP != "") {
+    LogInFunc(loginInput).then(() => {
+      wrongEmail.textContent = "";
+      wrongPw.textContent = "";
+      // logout
+      const logoutBtn = document.getElementById("logout");
+      const acc = document.getElementById("acc");
+      const accName = document.getElementById("accName");
+      logoutBtn.addEventListener("click", () => {
+        acc.remove();
+        accName.remove();
+        loginSpan.style.display = "flex";
+        signupSpan.style.display = "block";
+        setCookie("email=", "");
+        setCookie("password=", "");
+      });
+
+      //show the logout and email
+      accName.addEventListener("click", () => {
+        acc.style.opacity = "1";
+        acc.focus();
+      });
+      acc.addEventListener("blur", () => {
+        acc.style.opacity = "0";
+      });
+    });
+  }
+}
+
+checkCookie();
