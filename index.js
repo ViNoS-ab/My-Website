@@ -28,7 +28,6 @@ for (i in parsedPosts) {
   ids.push(parsedPosts[i].id);
 }
 
-const url = "https://slatier-challenge.000webhostapp.com";
 
 const corsOptions = {
   origin: null,
