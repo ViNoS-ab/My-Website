@@ -16,7 +16,6 @@
     "express-session": "^1.17.1",
     "fs": "0.0.1-security",
     "git": "^0.1.5",
-    "jsonwebtoken": "^8.5.1",
     "node-fl": "0.0.3",
     "nodemon": "2.0.4"
   },
