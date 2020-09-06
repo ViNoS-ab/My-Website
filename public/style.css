@@ -122,14 +122,13 @@ li.lastLi {
 #acc li {
   margin: 3px;
   padding: 5px;
-  border: none;
 }
 
 #logout:hover {
   background: #ccc;
 }
 #logout {
-  border-top: black solid 1px;
+  border-top: rgb(78, 78, 78) solid 1px;
   border-width: 2px;
   cursor: pointer;
 }
