@@ -1,25 +1,29 @@
 {
   "name": "api",
   "version": "1.0.0",
-  "description": "an api for the website",
+  "description": "api for the website",
   "main": "index.js",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "cors": "^2.8.5",
+    "express-session": "^1.17.1",
+    "git": "^0.1.5",
+    "jsonwebtoken": "^8.5.1",
+    "node-fl": "^0.0.3"
+  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ViNoS-ab/demo-website.git"
+  },
   "author": "ViNoS",
   "license": "ISC",
-  "dependencies": {
-    "bcrypt": "^5.0.0",
-    "cors": "^2.8.5",
-    "express": "4.17.1",
-    "express-session": "^1.17.1",
-    "fs": "0.0.1-security",
-    "git": "^0.1.5",
-    "node-fl": "0.0.3",
-    "nodemon": "2.0.4"
+  "bugs": {
+    "url": "https://github.com/ViNoS-ab/demo-website/issues"
   },
-  "engines": {
-    "node": "12.13.1"
-  }
+  "homepage": "https://github.com/ViNoS-ab/demo-website#readme"
 }
