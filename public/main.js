@@ -563,3 +563,4 @@ function checkCookie() {
 }
 
 checkCookie();
+console.log(firebase);
