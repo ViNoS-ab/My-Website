@@ -67,7 +67,6 @@ app.post("/api/posts", cors(corsOptions), (req, res) => {
   res.send(post);
   fs.writeFile("./data/posts.json", json, () => {
     console.log(JSON.stringify(post));
-    console.log(last(json));
   });
 });
 
