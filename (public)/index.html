@@ -34,29 +34,31 @@
     <link rel="stylesheet" href="./css/embed.css" />
     <link rel="stylesheet" href="./misc/plyr/plyr.css" />
     <!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-firestore.js"></script>
-<!-- TODO: Add SDKs for Firebase products that you want to use
+    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-firestore.js"></script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
-<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-analytics.js"></script>
 
-<script>
-  // Your web app's Firebase configuration
-  var firebaseConfig = {
-    apiKey: "AIzaSyDdoX9NXTQEMLgvB5kCGyk93CpjyiXUkuU",
-    authDomain: "mywebsite-21851.firebaseapp.com",
-    databaseURL: "https://mywebsite-21851.firebaseio.com",
-    projectId: "mywebsite-21851",
-    storageBucket: "mywebsite-21851.appspot.com",
-    messagingSenderId: "765847796259",
-    appId: "1:765847796259:web:90d1a9a47e506e62b58f96",
-    measurementId: "G-TSPY4KF2CR"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  firebase.analytics();
-</script>
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyDdoX9NXTQEMLgvB5kCGyk93CpjyiXUkuU",
+        authDomain: "mywebsite-21851.firebaseapp.com",
+        databaseURL: "https://mywebsite-21851.firebaseio.com",
+        projectId: "mywebsite-21851",
+        storageBucket: "mywebsite-21851.appspot.com",
+        messagingSenderId: "765847796259",
+        appId: "1:765847796259:web:90d1a9a47e506e62b58f96",
+        measurementId: "G-TSPY4KF2CR",
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+    </script>
+    <script src="./firebase.js" defer ></script>
+
   </head>
 
   <body>
@@ -130,7 +132,7 @@
       <form
         class="signmodal-content"
         id="signUpForm"
-        action="javascript:signUp()"
+        action="javascript:signUp();"
       >
         <div class="signcontainer">
           <h1>Sign Up</h1>
@@ -166,7 +168,7 @@
             autocomplete="new-password"
             required
           />
-
+          <p id="pswNotMatch"> </p>
           <label>
             <input
               type="checkbox"
@@ -198,7 +200,6 @@
     </div>
 
     <header>
-
       <div class="boundTop">
         <ul class="navBar">
           <li>Poser une question à</li>
@@ -223,7 +224,7 @@
       <div class="middleBound">
         <div class="upperMiddleBound">
           <div class="logo">
-            <img src="images/logo.png" alt="" />
+            <img src="images/logo.png" alt="logo" />
             <h1>This is my First website</h1>
           </div>
 

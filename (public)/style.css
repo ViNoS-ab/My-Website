@@ -98,17 +98,23 @@ li.lastLi {
 #accName {
   margin: 0;
 }
+#logout svg,
+#accName svg {
+  padding-right: 3px;
+}
 #accName {
   cursor: pointer;
 }
 #acc {
+  outline: none;
   position: absolute;
   list-style: none;
   background: #f1f1f1;
   top: 100%;
   color: #242424;
   box-shadow: 0 3px 10px rgba(89, 105, 129, 0.3), 0 1px 2px rgba(0, 0, 0, 0.05),
-    0 0 0 1px rgba(89, 105, 129, 0.1);
+    0 0 0 1px rgba(52, 54, 56, 0.568);
+  border-radius: 3px;
   margin: 0;
   font-weight: 600;
   font-size: 13px;
@@ -122,13 +128,14 @@ li.lastLi {
 #acc li {
   margin: 3px;
   padding: 5px;
+  border: none;
 }
 
 #logout:hover {
   background: #ccc;
 }
 #logout {
-  border-top: rgb(78, 78, 78) solid 1px;
+  border-top: rgb(78, 78, 78) solid 1px !important;
   border-width: 2px;
   cursor: pointer;
 }
@@ -280,6 +287,7 @@ div.someBtns {
   padding-right: 50px;
 }
 button#newPost {
+  display: none;
   position: relative;
   border: none;
   background: #5186d4;
@@ -616,7 +624,8 @@ span.psw {
 }
 #wrongPw,
 #wrongEmail,
-#takenEmail {
+#takenEmail,
+#pswNotMatch {
   color: red;
   font-size: 14px;
   margin: 1px;
@@ -670,7 +679,12 @@ input[name="psw-repeat"] {
   border: none;
   background: #f1f1f1;
 }
-
+input[name="psw-repeat"] {
+  margin-bottom: 0;
+}
+#pswNotMatch {
+  margin-bottom: 22px;
+}
 /* Add a background color when the inputs get focus */
 input[name="signpsw"]:focus,
 input[name="email"]:focus,

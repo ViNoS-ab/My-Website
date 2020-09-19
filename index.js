@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(cors());
 app.use(express.static("public"));
 
-var last = function last(array, n) {
+const last = function last(array, n) {
   if (array == null) return void 0;
   if (n == null) return array[array.length - 1];
   return array.slice(Math.max(array.length - n, 0));
