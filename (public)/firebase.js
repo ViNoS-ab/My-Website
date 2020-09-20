@@ -157,7 +157,7 @@ auth.onAuthStateChanged(function (user) {
 
 // reading posts
 // creating the li elemnt with content and everything
-function createPost(content, id) {
+function createPost(content, id, b4) {
   const liDiv = document.createElement("div");
   const li = document.createElement("li");
   const menu = document.createElement("div");
@@ -201,8 +201,7 @@ function createPost(content, id) {
   EditTxt.classList.add("editTxt");
   DeleteTxt.classList.add("deltxt");
   liDiv.id = "liDiv" + id;
-
-  // postLi.insertBefore(li, postLi.childNodes[0]);
+  if (b4) postLi.insertBefore(li, postLi.childNodes[0]);
   //here we make the post with with full main part width and height
   scrollDiv.addEventListener("click", () => {
     li.style.width = "90%";
@@ -248,7 +247,7 @@ const GettingPosts = async () => {
   posts = db.collection("posts");
   const arry = Array.prototype.slice.call(postLi.childNodes); //forming an array with node collection to use the slice method
   firstGet = await posts
-    .orderBy("createdAt") // Requires a query
+    .orderBy("createdAt", "desc") // Requires a query
     .get()
     .then((querySnapshot) => {
       // Map results to an array of li elements
@@ -257,25 +256,28 @@ const GettingPosts = async () => {
       });
       console.log(items);
 
-      snapshot = posts.orderBy("createdAt");
       for (const post of items) {
         createPost(post.content, post.id);
         Ids++;
       }
     });
-
-  if (arry.length == 0) {
-  } else
-    for (const post of items) {
-      const thisPost = document.getElementById(`liDiv${post.id}`);
-      if (thisPost && thisPost.innerHTML !== post.content) {
-        thisPost.innerHTML = post.content;
-      } else if (!thisPost) {
-        if (Ids < items.length) {
-          createPost(post.content, post.id);
+  snapshot = posts.orderBy("content").onSnapshot((querySnapshot) => {
+    const items = querySnapshot.docs.map((doc) => {
+      return doc.data();
+    });
+    if (arry.length == 0) {
+    } else
+      for (const post of items) {
+        const thisPost = document.getElementById(`liDiv${post.id}`);
+        if (thisPost && thisPost.innerHTML !== post.content) {
+          thisPost.innerHTML = post.content;
+        } else if (!thisPost) {
+          if (Ids < items.length) {
+            createPost(post.content, post.id , b4);
+          }else {}
         }
       }
-    }
+  });
 };
 
 GettingPosts().then(() => {
