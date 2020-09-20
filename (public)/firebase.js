@@ -243,8 +243,10 @@ function createPost(content, id) {
 }
 let firstGet;
 let snapshot;
-const GettingPosts = async () => {let Ids = 0;
+const GettingPosts = async () => {
+  let Ids = 0;
   posts = db.collection("posts");
+  const arry = Array.prototype.slice.call(postLi.childNodes); //forming an array with node collection to use the slice method
   firstGet = await posts
     .orderBy("createdAt") // Requires a query
     .get()
@@ -253,27 +255,27 @@ const GettingPosts = async () => {let Ids = 0;
       const items = querySnapshot.docs.map((doc) => {
         return doc.data();
       });
+      console.log(items);
 
-       
-snapshot = posts.orderBy("createdAt")
+      snapshot = posts.orderBy("createdAt");
       for (const post of items) {
         createPost(post.content, post.id);
         Ids++;
-      }});
+      }
+    });
 
-      if (arry.length == 0) {
-      } else
-        for (const post of items) {
-          const thisPost = document.getElementById(`liDiv${post.id}`);
-          if (thisPost && thisPost.innerHTML !== post.content) {
-            thisPost.innerHTML = post.content;
-          } else if (!thisPost) {
-            if (Ids < items.length) {
-              createPost(post.content, post.id);
-            }
-          }
+  if (arry.length == 0) {
+  } else
+    for (const post of items) {
+      const thisPost = document.getElementById(`liDiv${post.id}`);
+      if (thisPost && thisPost.innerHTML !== post.content) {
+        thisPost.innerHTML = post.content;
+      } else if (!thisPost) {
+        if (Ids < items.length) {
+          createPost(post.content, post.id);
         }
-    
+      }
+    }
 };
 
 GettingPosts().then(() => {
