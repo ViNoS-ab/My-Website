@@ -66,6 +66,9 @@ auth.onAuthStateChanged((user) => {
       auth.signOut();
     });
 
+    newPost.addEventListener("click", OpeningNewPost);
+    submit.removeEventListener("click", alert);
+    newPost.removeEventListener("click", alert);
     //show the logout and email
     accName.addEventListener("click", () => {
       acc.style.opacity = "1";
@@ -85,15 +88,17 @@ auth.onAuthStateChanged((user) => {
 
     newPost.style.display = "none";
     newPost.removeEventListener("click", OpeningNewPost);
-    newPost.addEventListener("click", () => {
-      alert("you should be signed in to write a post");
-    });
+    newPost.addEventListener(
+      "click",
+      alert("you should be signed in to write a post")
+    );
     submit.removeEventListener("click", submitPost);
-    submit.addEventListener("click", () => {
+    submit.addEventListener(
+      "click",
       alert(
         "you are not supposed to see this button but anyway you don't have permission to post"
-      );
-    });
+      )
+    );
   }
 });
 
@@ -243,7 +248,6 @@ function createPost(content, id, b4) {
 let firstGet;
 let snapshot;
 const GettingPosts = async () => {
-  let Ids = 0;
   posts = db.collection("posts");
   const arry = Array.prototype.slice.call(postLi.childNodes); //forming an array with node collection to use the slice method
   firstGet = await posts
@@ -254,45 +258,50 @@ const GettingPosts = async () => {
       const items = querySnapshot.docs.map((doc) => {
         return doc.data();
       });
-      console.log(items);
-
-      for (const post of items) {
-        createPost(post.content, post.id);
-        Ids++;
+   
+      if (arry.length == 0) {
+        for (const post of items) {
+          createPost(post.content, post.id);
+        }
       }
     });
   snapshot = posts.orderBy("content").onSnapshot((querySnapshot) => {
     const items = querySnapshot.docs.map((doc) => {
       return doc.data();
     });
-    if (arry.length == 0) {
-    } else
-      for (const post of items) {
-        const thisPost = document.getElementById(`liDiv${post.id}`);
-        if (thisPost && thisPost.innerHTML !== post.content) {
-          thisPost.innerHTML = post.content;
-        } else if (!thisPost) {
-          if (Ids < items.length) {
-            createPost(post.content, post.id , b4);
-          }else {}
+
+    for (const post of items) {
+      const thisPost = document.getElementById(`liDiv${post.id}`);
+      if (thisPost && thisPost.innerHTML !== post.content) {
+        thisPost.innerHTML = post.content;
+      } else if (!thisPost) {
+        if (post.id) {
+          createPost(post.content, post.id, "b4");
         }
       }
+    }
   });
 };
 
 GettingPosts().then(() => {
   const arry = Array.prototype.slice.call(postLi.childNodes); //forming an array with node collection to use the slice method
 
-  let allPostsTriggred = false;
+  let allPostsTogled = false;
+  //hide all the posts then show them in the next step
+  for (const displayedLi of arry) {
+    displayedLi.style.display = "none";
+  }
   // see all posts part
   for (const displayedLi of arry.slice(0, 6)) {
     displayedLi.style.display = "inline";
   }
   allPosts.addEventListener("click", () => {
-    if (allPostsTriggred === false) {
+    const arry = Array.prototype.slice.call(postLi.childNodes); //forming an array with node collection to use the slice method
+
+    if (allPostsTogled === false) {
       for (const displayedLi of arry) {
         displayedLi.style.display = "inline";
-        allPostsTriggred = true;
+        allPostsTogled = true;
         allPosts.textContent = "See less Posts";
       }
     } else {
@@ -302,7 +311,7 @@ GettingPosts().then(() => {
       for (const displayedLi of arry.slice(0, 6)) {
         displayedLi.style.display = "inline";
         allPosts.textContent = "See all Posts";
-        allPostsTriggred = false;
+        allPostsTogled = false;
       }
     }
   });

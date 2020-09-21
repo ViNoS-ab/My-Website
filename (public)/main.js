@@ -67,36 +67,9 @@ function OpeningNewPost() {
   textArea.value = "";
   openMd();
 }
-newPost.addEventListener("click", OpeningNewPost);
 
-// from here its sending post part
 
-const submitPost = async (data) => {
-  try {
-    let request = await fetch(urlPosts, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-    if (request.status == 200) {
-      response = await request.json();
-      alert(
-        "Post submitted successfully\nmaybe you need to refresh the page to see it correctly"
-      );
-      const allPosts = postLi.innerHTML;
-      postLi.innerHTML = `<li class="postContainer" style="display: inline;"> <div class="scrollDiv"><div class="liDiv"> ${response.content} </li>  ${allPosts}`;
-    } else {
-      response = await request.text();
 
-      alert(request.statusText + " : " + response);
-      console.log(request.status + request.statusText + " : " + response);
-    }
-  } catch (err) {
-    console.log(err);
-  }
-};
 
 // this is getting the posts from json file part
 
@@ -232,6 +205,7 @@ const LogIn = () => {
   };
   LogInFunc(loginInput.email, loginInput.password);
 };
+
 
 // const LogInFunc = async (loginInput) => {
 //   try {

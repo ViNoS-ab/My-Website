@@ -342,7 +342,6 @@ ul#posts {
   height: 200px;
   box-shadow: 3px 2px rgb(196, 196, 196);
   background: #f0f0f0;
-  display: none;
   border-radius: 10px;
   position: relative;
 }
