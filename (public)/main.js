@@ -26,6 +26,13 @@ const resText = document.getElementById("resTxt");
 const notMatch = document.getElementById("pswNotMatch");
 const Lmodal = document.getElementById("id01");
 const Smodal = document.getElementById("id02");
+const fbBtn = document.getElementById("facebook-lgn");
+const googleBtn = document.getElementById("google-lgn");
+const rememberSign = document.getElementById("rememberSign")
+const rememberLgn = document.getElementById("rememberLgn")
+const facebookSign = document.getElementById("facebook-sign")
+const googleSign = document.getElementById("google-sign")
+
 
 let postId;
 
@@ -34,6 +41,8 @@ const url = "http://localhost:3000";
 const urlPosts = "/api/posts/";
 const urllgn = "/users/login/";
 const urlsign = "/users/";
+
+
 
 const last = (array, n) => {
   if (array == null) return void 0;

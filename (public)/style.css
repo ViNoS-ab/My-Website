@@ -548,6 +548,12 @@ input[name="psw"] {
   border: none;
   cursor: pointer;
   width: 100%;
+  font-size: 18px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue",
+    Helvetica, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", メイリオ,
+    Meiryo, "ＭＳ Ｐゴシック", Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 .lgnbutton:hover {
@@ -609,8 +615,8 @@ span.psw {
 /* The Close Button (x) */
 .close {
   position: relative;
-  left: 95%;
-  top: -10px;
+  left: 84%;
+  top: -13px;
   color: #000;
   font-size: 35px;
   font-weight: bold;
@@ -633,6 +639,97 @@ span.psw {
 .animate {
   -webkit-animation: animatezoom 0.6s;
   animation: animatezoom 0.6s;
+}
+
+.or {
+  display: flex;
+}
+.or hr {
+  border: 1px solid #c5c5c5;
+  margin-bottom: 25px;
+  width: 40%;
+  margin: 10px;
+  height: 0;
+}
+.other-lgns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  flex-direction: column;
+}
+
+#google-lgn,
+#facebook-lgn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 37px;
+  margin: 5px;
+  width: 74%;
+  min-width: 250px;
+  padding: 5px;
+  border: none;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue",
+    Helvetica, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", メイリオ,
+    Meiryo, "ＭＳ Ｐゴシック", Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol";
+}
+#google-lgn,
+#google-sign {
+  background: rgb(220, 220, 220);
+  color: rgb(51, 51, 51);
+}
+#google-lgn:hover,
+#google-sign:hover {
+  cursor: pointer;
+  background: #c5c5c5;
+}
+#facebook-lgn,
+#facebook-sign {
+  background: rgb(24, 119, 242);
+  color: rgb(255, 255, 255);
+}
+#facebook-lgn:hover,
+#facebook-sign:hover {
+  cursor: pointer;
+  background: rgb(59, 87, 157);
+}
+.facebookImg {
+  background: url(./images/facebook.svg);
+  background-color: #fff;
+  background-size: cover;
+  background-position: -3px;
+  display: inline-block;
+  background-repeat: no-repeat;
+  width: 23px;
+  height: 23px;
+  position: relative;
+  left: -22px;
+  border-radius: 50%;
+}
+.googleImg {
+  background: url(./images/google.png);
+  background-size: cover;
+  display: inline-block;
+  background-repeat: no-repeat;
+  width: 19px;
+  height: 19px;
+  position: relative;
+  left: -30px;
+}
+/* The Close Button (x) */
+.signclose {
+  position: absolute;
+  right: 35px;
+  top: 15px;
+  font-size: 40px;
+  font-weight: bold;
+  color: #f1f1f1;
 }
 
 @-webkit-keyframes animatezoom {
@@ -691,7 +788,11 @@ input[name="psw-repeat"]:focus {
   background-color: #ddd;
   outline: none;
 }
-
+form {
+  font-family: Madefor-Text, HelveticaNeueW01-45Ligh, HelveticaNeueW02-45Ligh,
+    HelveticaNeueW10-45Ligh, sans-serif;
+  color: #292929;
+}
 /* Set a style for all buttons */
 .signbutton {
   background-color: #4caf50;
@@ -745,24 +846,61 @@ input[name="psw-repeat"]:focus {
   background-color: #fefefe;
   margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
   border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
-  max-width: 600px;
+  width: 85%; /* Could be more or less, depending on screen size */
+}
+.separator {
+  width: 1px;
+  background: rgb(94, 94, 94);
+  height: 450px;
+  margin: 20px 20px 50px;
+}
+.uselessDiv {
+  display: flex;
+  flex-direction: row;
+}
+.socialSignup {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
 }
 
+.signmodal-content h1,
+.signmodal-content p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+}
+.signmodal-content p a {
+  color: blue;
+}
 /* Style the horizontal ruler */
 hr {
   border: 1px solid #f1f1f1;
   margin-bottom: 25px;
 }
 
-/* The Close Button (x) */
-.signclose {
-  position: absolute;
-  right: 35px;
-  top: 15px;
-  font-size: 40px;
-  font-weight: bold;
-  color: #f1f1f1;
+#facebook-sign,
+#google-sign {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 45px;
+  margin: 10px;
+  width: 100%;
+  min-width: 250px;
+  padding: 5px;
+  border: none;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 2px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue",
+    Helvetica, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", メイリオ,
+    Meiryo, "ＭＳ Ｐゴシック", Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 .signclose:hover,
@@ -779,9 +917,20 @@ hr {
 }
 
 /* Change styles for cancel button and signup button on extra small screens */
-@media screen and (max-width: 300px) {
+@media only screen and (orientation: portrait), (max-width: 680px)  {
   .signcancelbtn,
   .signupbtn {
     width: 100%;
+  }
+  .uselessDiv{
+    flex-direction: column;
+  }
+  .separator {
+    height: 1px;
+    width: 90%;
+    margin: 20px 5%;
+  }
+  .signmodal-content {
+    max-width: 400px;
   }
 }

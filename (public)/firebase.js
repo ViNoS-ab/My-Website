@@ -1,19 +1,53 @@
 const auth = firebase.auth();
 
 const google = new firebase.auth.GoogleAuthProvider();
+const facebook = new firebase.auth.FacebookAuthProvider();
+
+
+body.addEventListener('click', event => {
+  if (event.target == fbBtn || event.target == facebookSign) {
+    rememberLgn.checked === true
+    ? auth.signInWithPopup(facebook)
+    : auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).then(() => {
+        auth.signInWithPopup(facebook);
+      });
+  }
+  if (event.target == googleBtn || event.target == googleSign){
+    rememberLgn.checked === true
+    ? auth.signInWithPopup(google)
+    : auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).then(() => {
+        auth.signInWithPopup(google);
+      });
+  }
+})
+
 const LogInFunc = (email, password) => {
-  auth.signInWithEmailAndPassword(email, password).catch((error) => {
-    if (error.code == "auth/wrong-password") {
-      wrongPw.textContent = error.code;
-    }
-    if (error.code == "auth/user-not-found") {
-      wrongEmail.textContent = error.message;
-    }
-  });
+  rememberLgn.checked === true
+    ? auth.signInWithEmailAndPassword(email, password).catch((error) => {
+        if (error.code == "auth/wrong-password") {
+          wrongPw.textContent = error.code;
+        }
+        if (error.code == "auth/user-not-found") {
+          wrongEmail.textContent = error.message;
+        }
+      })
+    : auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).then(() => {
+        auth.signInWithEmailAndPassword(email, password).catch((error) => {
+          if (error.code == "auth/wrong-password") {
+            wrongPw.textContent = error.code;
+          }
+          if (error.code == "auth/user-not-found") {
+            wrongEmail.textContent = error.message;
+          }
+        });
+      });
 };
+const NoSubmitAlert = () =>
+  alert(
+    "you are not supposed to see this button but anyway you don't have permission to post"
+  );
 
-// auth.signInWithPopup(google);
-
+const noNewPostAlert = () => alert("you should be signed in to write a post");
 auth.onAuthStateChanged((user) => {
   if (user) {
     newPost.style.display = "block";
@@ -67,8 +101,8 @@ auth.onAuthStateChanged((user) => {
     });
 
     newPost.addEventListener("click", OpeningNewPost);
-    submit.removeEventListener("click", alert);
-    newPost.removeEventListener("click", alert);
+    submit.removeEventListener("click", NoSubmitAlert);
+    newPost.removeEventListener("click", noNewPostAlert);
     //show the logout and email
     accName.addEventListener("click", () => {
       acc.style.opacity = "1";
@@ -88,17 +122,9 @@ auth.onAuthStateChanged((user) => {
 
     newPost.style.display = "none";
     newPost.removeEventListener("click", OpeningNewPost);
-    newPost.addEventListener(
-      "click",
-      alert("you should be signed in to write a post")
-    );
+    newPost.addEventListener("click", noNewPostAlert);
     submit.removeEventListener("click", submitPost);
-    submit.addEventListener(
-      "click",
-      alert(
-        "you are not supposed to see this button but anyway you don't have permission to post"
-      )
-    );
+    submit.addEventListener("click", NoSubmitAlert);
   }
 });
 
@@ -112,13 +138,14 @@ const signUp = () => {
       email: signEmail.value,
       password: signPsw.value,
     };
+
     auth
       .createUserWithEmailAndPassword(signUpinput.email, signUpinput.password)
-      .then(() => document.getElementById("signUpForm").reset())
+      .then(() => {
+        document.getElementById("signUpForm").reset();
+        document.getElementById("id02").style.display = "none";
+      })
       .catch((error) => (takenEmail.textContent = error.message));
-  } else {
-    notMatch.textContent = "password not match";
-    signRptPsw.value = "";
   }
 };
 
@@ -258,7 +285,7 @@ const GettingPosts = async () => {
       const items = querySnapshot.docs.map((doc) => {
         return doc.data();
       });
-   
+
       if (arry.length == 0) {
         for (const post of items) {
           createPost(post.content, post.id);
@@ -278,6 +305,19 @@ const GettingPosts = async () => {
         if (post.id) {
           createPost(post.content, post.id, "b4");
         }
+      }
+    }
+    const arry = Array.prototype.slice.call(
+      document.querySelectorAll(".liDiv")
+    ); //forming an array with node collection to use the slice method
+    for (let i in arry) {
+      const thisPostId = arry[i].id.split("liDiv")[1];
+      const deletedPost = items.filter((filter) => {
+     return   filter.id == thisPostId;
+      });
+      if (!deletedPost[0]) {
+        arry[i].parentElement.parentElement.remove();
+
       }
     }
   });
