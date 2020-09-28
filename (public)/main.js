@@ -28,11 +28,12 @@ const Lmodal = document.getElementById("id01");
 const Smodal = document.getElementById("id02");
 const fbBtn = document.getElementById("facebook-lgn");
 const googleBtn = document.getElementById("google-lgn");
-const rememberSign = document.getElementById("rememberSign")
-const rememberLgn = document.getElementById("rememberLgn")
-const facebookSign = document.getElementById("facebook-sign")
-const googleSign = document.getElementById("google-sign")
-
+const rememberSign = document.getElementById("rememberSign");
+const rememberLgn = document.getElementById("rememberLgn");
+const facebookSign = document.getElementById("facebook-sign");
+const googleSign = document.getElementById("google-sign");
+const postSearch = document.getElementById("postSearch");
+const searchBtn = document.getElementById("searchBtn");
 
 let postId;
 
@@ -41,8 +42,6 @@ const url = "http://localhost:3000";
 const urlPosts = "/api/posts/";
 const urllgn = "/users/login/";
 const urlsign = "/users/";
-
-
 
 const last = (array, n) => {
   if (array == null) return void 0;
@@ -77,51 +76,39 @@ function OpeningNewPost() {
   openMd();
 }
 
-
-
-
 // this is getting the posts from json file part
 
-      // this is delete posts part
-      const DeletePost = async () => {
-        try {
-          let request = await fetch(urlPosts + post.id, {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
-          response = await request.text();
-          if (response === "the post has been succefly deleted") {
-            alert(response);
-            li.style.display = "none";
-          }
-        } catch (err) {
-          console.log(err);
-        }
-      };
-      // Delete.addEventListener("click", () => {
-      //   if (confirm("Are you sure that you want to delete the post ?")) {
-      //     DeletePost();
-      //   }
-      // });
-      // Edit.addEventListener("click", () => {
-      //   const thisPost = document.getElementById("liDiv" + post.id);
-      //   const textArea = document.getElementById("input");
-      //   textArea.value = thisPost.textContent;
+// this is delete posts part
+const DeletePost = async () => {
+  try {
+    let request = await fetch(urlPosts + post.id, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    response = await request.text();
+    if (response === "the post has been succefly deleted") {
+      alert(response);
+      li.style.display = "none";
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
 
-      //   setTimeout(() => {
-      //     openMd();
-      //   }, 1);
+// Edit.addEventListener("click", () => {
+//   const thisPost = document.getElementById("liDiv" + post.id);
+//   const textArea = document.getElementById("input");
+//   textArea.value = thisPost.textContent;
 
-      //   postId = post.id;
-      //   editBtn.removeAttribute("hidden");
-      // });
-    
- 
-   
- 
+//   setTimeout(() => {
+//     openMd();
+//   }, 1);
 
+//   postId = post.id;
+//   editBtn.removeAttribute("hidden");
+// });
 
 //hide the back to top button (when u are in the top already xD)
 window.onscroll = function () {
@@ -178,7 +165,6 @@ editBtn.addEventListener("click", () => {
 //login interface
 // Get the modal
 
-
 // When the user clicks anywhere outside of the modal, close it
 window.addEventListener("click", ($event) => {
   if ($event.target == Lmodal) {
@@ -189,9 +175,6 @@ window.addEventListener("click", ($event) => {
 loginSpan.addEventListener("click", () => {
   Lmodal.style.display = "block";
 });
-//sign in interface
-// Get the modal
-
 
 // When the user clicks anywhere outside of the modal, close it
 window.addEventListener("click", ($event) => {
@@ -214,118 +197,6 @@ const LogIn = () => {
   };
   LogInFunc(loginInput.email, loginInput.password);
 };
-
-
-// const LogInFunc = async (loginInput) => {
-//   try {
-//     let request = await fetch(urllgn, {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       credentials: "same-origin",
-
-//       body: JSON.stringify(loginInput),
-//     });
-// if (request.status == 200) {
-//   response = await request.json();
-//   if (response.text == "you are logged in ") {
-//     Lmodal.style.display = "none";
-//     loginSpan.style.display = "none";
-//     signupSpan.style.display = "none";
-
-//     const lgnAndSignDiv = document.querySelector("#loginBtn");
-//     const accName = document.createElement("p");
-//     lgnAndSignDiv.appendChild(accName);
-//     accName.id = "accName";
-//     accName.innerHTML =
-//       '<i class="fas fa-user"></i>' + response.email.split("@", 1);
-//     const acc = document.createElement("ul");
-//     const mailName = document.createElement("li");
-//     const logout = document.createElement("li");
-//     acc.setAttribute("tabindex", "0");
-//     acc.appendChild(mailName);
-//     acc.appendChild(logout);
-//     lgnAndSignDiv.appendChild(acc);
-//     mailName.innerHTML = '<p id="resTxt"> ' + response.email + "</p>";
-//     logout.innerHTML = '<i class="fas fa-sign-out-alt"></i> Sign out';
-//     mailName.id = "mailName";
-//     acc.id = "acc";
-//     logout.id = "logout";
-
-//     if (document.getElementById("rememberLgn").checked === true) {
-//       setCookie("email=", loginInput.email, 365 * 3);
-//       setCookie("password=", loginInput.password, 365 * 3);
-//     } else {
-//       setCookie("email=", loginInput.email);
-//       setCookie("password=", loginInput.password);
-//     }
-
-//     if (getCookie("loggedB4") !== "=yes") {
-//       setCookie("loggedB4=", "yes");
-//       alert(response.text);
-//     }
-//     console.log(getCookie("loggedB4") != "=yes");
-//   }
-//   if (response.text == "Wrong password")
-//     wrongPw.textContent = response.text;
-// } else {
-//   response = await request.json();
-//   if (response.text == "Cannot find user") {
-//     wrongEmail.textContent = response.text;
-//   } else {
-//     alert(request.statusText + " : " + response.text);
-//     console.log(request.status + request.statusText + " : " + response);
-//   }
-// }
-// document.getElementById("logInForm").reset();
-//   } catch (err) {
-//     console.log(err);
-//     alert("an error occured try again later");
-//   }
-// };
-
-// sign up system
-
-// const signUp = async () => {
-//   if (signPsw.value !== signRptPsw.value) return alert("password not match");
-//   const signUpinput = {
-//     email: signEmail.value,
-//     password: signPsw.value,
-//   };
-//   takenEmail.textContent = "";
-//   try {
-//     let request = await fetch(urlsign, {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       credentials: "same-origin",
-//       body: JSON.stringify(signUpinput),
-//     });
-//     if (request.status == 200) {
-//       response = await request.text();
-//       alert(response);
-//       if (response == "you signed up !!") {
-//         Smodal.style.display = "none";
-//         if (document.getElementById("rememberSign").checked === true) {
-//           setCookie("email=", signUpinput.email, 365 * 3);
-//           setCookie("password=", signUpinput.password, 365 * 3);
-//           LogInFunc(signUpinput);
-//         }
-//       }
-//     } else {
-//       response = await request.text();
-//       takenEmail.textContent = response;
-//       //alert(request.statusText + " : " + response);
-//       console.log(request.status + request.statusText + " : " + response);
-//     }
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
-
-// this is to make the site lunch with the api
 
 //function to set the cookie
 function setCookie(cname, cvalue, exdays) {
@@ -354,3 +225,32 @@ function getCookie(cname) {
   }
   return "";
 }
+// the search functionality
+searchBtn.addEventListener("click" , () => {
+  const SearchedPosts = postSearch.value;
+  const arry = Array.prototype.slice.call(postLi.childNodes); //forming an array with node collection to use the slice method
+  const filteredPosts = arry.filter(filter => {
+    return filter.id.includes(SearchedPosts)
+  })
+for(const a of arry){
+  a.style.display = "none"
+}
+for(const showPost of filteredPosts){
+  showPost.style.display = "inline"
+}
+})
+postSearch.addEventListener("keydown" , (key) => {
+  if (key.key ==="Enter") {
+    const SearchedPosts = postSearch.value;
+  const arry = Array.prototype.slice.call(postLi.childNodes); //forming an array with node collection to use the slice method
+  const filteredPosts = arry.filter(filter => {
+    return filter.id.includes(SearchedPosts)
+  })
+for(const a of arry){
+  a.style.display = "none"
+}
+for(const showPost of filteredPosts){
+  showPost.style.display = "inline"
+}
+  }
+})

@@ -3,23 +3,22 @@ const auth = firebase.auth();
 const google = new firebase.auth.GoogleAuthProvider();
 const facebook = new firebase.auth.FacebookAuthProvider();
 
-
-body.addEventListener('click', event => {
+body.addEventListener("click", (event) => {
   if (event.target == fbBtn || event.target == facebookSign) {
     rememberLgn.checked === true
-    ? auth.signInWithPopup(facebook)
-    : auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).then(() => {
-        auth.signInWithPopup(facebook);
-      });
+      ? auth.signInWithPopup(facebook)
+      : auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).then(() => {
+          auth.signInWithPopup(facebook);
+        });
   }
-  if (event.target == googleBtn || event.target == googleSign){
+  if (event.target == googleBtn || event.target == googleSign) {
     rememberLgn.checked === true
-    ? auth.signInWithPopup(google)
-    : auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).then(() => {
-        auth.signInWithPopup(google);
-      });
+      ? auth.signInWithPopup(google)
+      : auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).then(() => {
+          auth.signInWithPopup(google);
+        });
   }
-})
+});
 
 const LogInFunc = (email, password) => {
   rememberLgn.checked === true
@@ -69,7 +68,7 @@ auth.onAuthStateChanged((user) => {
     accName.appendChild(userIcon);
     accName.insertBefore(userIcon, accName.childNodes[0]);
     console.log(
-      user.displayName !== null ? user.displayName : user.email.split("@", 1)
+      user.displayName !== null ? user.displayName : user.email.split("@", 1)[0]
     );
 
     const acc = document.createElement("ul");
@@ -101,7 +100,6 @@ auth.onAuthStateChanged((user) => {
     });
 
     newPost.addEventListener("click", OpeningNewPost);
-    submit.removeEventListener("click", NoSubmitAlert);
     newPost.removeEventListener("click", noNewPostAlert);
     //show the logout and email
     accName.addEventListener("click", () => {
@@ -114,6 +112,7 @@ auth.onAuthStateChanged((user) => {
   } else {
     const acc = document.getElementById("acc");
     const accName = document.getElementById("accName");
+    const submit = document.getElementById("submitPost");
 
     acc.remove();
     accName.remove();
@@ -123,8 +122,6 @@ auth.onAuthStateChanged((user) => {
     newPost.style.display = "none";
     newPost.removeEventListener("click", OpeningNewPost);
     newPost.addEventListener("click", noNewPostAlert);
-    submit.removeEventListener("click", submitPost);
-    submit.addEventListener("click", NoSubmitAlert);
   }
 });
 
@@ -151,22 +148,25 @@ const signUp = () => {
 
 // firestore (databse)
 const db = firebase.firestore();
-
 let posts;
 
 auth.onAuthStateChanged(function (user) {
   if (user) {
     // User is signed in.
     // creating posts
+    const submit = document.getElementById("submitPost");
+    submit.removeEventListener("click", NoSubmitAlert);
+
     posts = db.collection("posts");
     const { serverTimestamp } = firebase.firestore.FieldValue;
+    console.log(serverTimestamp);
     const submitPost = async (event) => {
       event.preventDefault();
 
       let LastId = posts.doc("id");
       let id;
       LastId.get().then((doc) => {
-        id = Number(doc.data().lastPost);
+        id = doc.data().lastPost;
         id++;
         id = id.toString();
 
@@ -175,21 +175,28 @@ auth.onAuthStateChanged(function (user) {
           content: a.preview.innerHTML,
           createdAt: serverTimestamp(),
           id: Number(id),
+          title: prompt("please enter a title for that post"),
         };
-        console.log(id);
+        console.log(post.uid);
         posts.doc(id).set(post).then(closeMD()); // puted this line here instead of outside "then" because i need the id
         LastId.update({ lastPost: Number(id) });
       });
     };
+
     submit.addEventListener("click", submitPost);
   } else {
     // User is signed out.
+    const submit = document.getElementById("submitPost");
+    const newSubmit = submit.cloneNode(true);
+    submit.parentNode.replaceChild(newSubmit, submit);
+
+    newSubmit.addEventListener("click", NoSubmitAlert);
   }
 });
 
 // reading posts
 // creating the li elemnt with content and everything
-function createPost(content, id, b4) {
+function createPost(content, id,title, b4) {
   const liDiv = document.createElement("div");
   const li = document.createElement("li");
   const menu = document.createElement("div");
@@ -228,6 +235,7 @@ function createPost(content, id, b4) {
   scrollDiv.classList.add("scrollDiv");
   liDiv.classList.add("liDiv");
   li.classList.add("postContainer");
+  if(title)li.id = title;
   DelIcon.classList.add("delIcon");
   editIcon.classList.add("editIcon");
   EditTxt.classList.add("editTxt");
@@ -271,7 +279,21 @@ function createPost(content, id, b4) {
     changes.style.opacity = "0";
     changes.style.transform = "scale(0)";
   });
+  Delete.addEventListener("click", () => {
+    if (confirm("Are you sure that you want to delete the post ?")) {
+      db.collection("posts")
+        .doc(id.toString())
+        .delete()
+        .then(() => {
+          console.log("Document successfully deleted!");
+        })
+        .catch((error) => {
+          console.error("Error removing document: ", error);
+        });
+    }
+  });
 }
+
 let firstGet;
 let snapshot;
 const GettingPosts = async () => {
@@ -281,14 +303,13 @@ const GettingPosts = async () => {
     .orderBy("createdAt", "desc") // Requires a query
     .get()
     .then((querySnapshot) => {
-      // Map results to an array of li elements
       const items = querySnapshot.docs.map((doc) => {
         return doc.data();
       });
 
       if (arry.length == 0) {
         for (const post of items) {
-          createPost(post.content, post.id);
+          createPost(post.content, post.id , post.title);
         }
       }
     });
@@ -303,7 +324,7 @@ const GettingPosts = async () => {
         thisPost.innerHTML = post.content;
       } else if (!thisPost) {
         if (post.id) {
-          createPost(post.content, post.id, "b4");
+          createPost(post.content, post.id,post.title, "b4");
         }
       }
     }
@@ -312,12 +333,12 @@ const GettingPosts = async () => {
     ); //forming an array with node collection to use the slice method
     for (let i in arry) {
       const thisPostId = arry[i].id.split("liDiv")[1];
+      //what are we doing here is cheking if a post exist in the DOM and doesn't exist in db so we delete it
       const deletedPost = items.filter((filter) => {
-     return   filter.id == thisPostId;
+        return filter.id == thisPostId;
       });
       if (!deletedPost[0]) {
         arry[i].parentElement.parentElement.remove();
-
       }
     }
   });
