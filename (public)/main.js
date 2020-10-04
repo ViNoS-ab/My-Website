@@ -34,6 +34,7 @@ const facebookSign = document.getElementById("facebook-sign");
 const googleSign = document.getElementById("google-sign");
 const postSearch = document.getElementById("postSearch");
 const searchBtn = document.getElementById("searchBtn");
+const phoneBoundTop = document.getElementById("phoneBoundTop");
 
 let postId;
 
@@ -170,6 +171,7 @@ window.addEventListener("click", ($event) => {
   if ($event.target == Lmodal) {
     Lmodal.style.display = "none";
   }
+  if ($event.target == phoneBoundTop) phoneBoundTop.style.display = "none";
 });
 
 loginSpan.addEventListener("click", () => {
@@ -226,31 +228,50 @@ function getCookie(cname) {
   return "";
 }
 // the search functionality
-searchBtn.addEventListener("click" , () => {
-  const SearchedPosts = postSearch.value;
+searchBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  const SearchedPosts = postSearch.value.toLowerCase();
   const arry = Array.prototype.slice.call(postLi.childNodes); //forming an array with node collection to use the slice method
-  const filteredPosts = arry.filter(filter => {
-    return filter.id.includes(SearchedPosts)
-  })
-for(const a of arry){
-  a.style.display = "none"
-}
-for(const showPost of filteredPosts){
-  showPost.style.display = "inline"
-}
-})
-postSearch.addEventListener("keydown" , (key) => {
-  if (key.key ==="Enter") {
-    const SearchedPosts = postSearch.value;
-  const arry = Array.prototype.slice.call(postLi.childNodes); //forming an array with node collection to use the slice method
-  const filteredPosts = arry.filter(filter => {
-    return filter.id.includes(SearchedPosts)
-  })
-for(const a of arry){
-  a.style.display = "none"
-}
-for(const showPost of filteredPosts){
-  showPost.style.display = "inline"
-}
+  const filteredPosts = arry.filter((filter) => {
+    return (
+      filter.id.toLowerCase().includes(SearchedPosts) ||
+      (SearchedPosts.includes(filter.id.toLowerCase()) && filter.id !== "")
+    );
+  });
+  for (const a of arry) {
+    a.style.display = "none";
   }
-})
+  for (const showPost of filteredPosts) {
+    showPost.style.display = "inline";
+  }
+});
+postSearch.addEventListener("keydown", (key) => {
+  if (key.key === "Enter") {
+    key.preventDefault();
+    const SearchedPosts = postSearch.value;
+    const arry = Array.prototype.slice.call(postLi.childNodes); //forming an array with node collection to use the slice method
+    const filteredPosts = arry.filter((filter) => {
+      return (
+        filter.id.toLowerCase().includes(SearchedPosts) ||
+        (SearchedPosts.includes(filter.id.toLowerCase()) && filter.id !== "")
+      );
+    });
+    for (const a of arry) {
+      a.style.display = "none";
+    }
+    for (const showPost of filteredPosts) {
+      showPost.style.display = "inline";
+    }
+  }
+});
+// unspoile spoile elements on click
+body.addEventListener("click", (e) => {
+  if (e.target.className !== "md-spoiler") return;
+  else {
+    e.target.classList.add("md-unhidenspoiler");
+  }
+});
+// toogle the menu
+phoneNavToogle.addEventListener("click", () => {
+  phoneBoundTop.style.display = "inline";
+});

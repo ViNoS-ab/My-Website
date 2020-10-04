@@ -128,7 +128,7 @@ table td:first-child {
 .md-unhidenspoiler > * {
   opacity: 1 !important;
   z-index: 1 !important;
-  color: white;
+  color: white !important;
 }
 
 .md-media {

@@ -113,7 +113,6 @@
           <p id="wrongPw"></p>
           <button class="lgnbutton" id="login">Login</button>
           <label>
-        
             <input
               type="checkbox"
               checked="checked"
@@ -201,13 +200,12 @@
               Remember me
             </label>
 
-            
             <div class="clearfix">
               <button
-              type="button"
+                type="button"
                 onclick="document.getElementById('id02').style.display='none'"
                 class="signcancelbtn signbutton"
-                >
+              >
                 Cancel
               </button>
               <button class="signupbtn signbutton" id="signUp">Sign Up</button>
@@ -215,7 +213,6 @@
           </div>
           <div class="separator"></div>
           <div class="socialSignup">
-          
             <button type="button" id="facebook-sign">
               <div class="facebookImg"></div>
               Continue with facebook
@@ -234,6 +231,22 @@
     </div>
 
     <header>
+      <div id="phoneNavToogle">&#9776; Menu</div>
+      <div class="phoneBoundTop" id="phoneBoundTop">
+        <div class="phoneNavMenu">
+          <ul>
+            <li class="phoneNavBar">first</li>
+            <li class="phoneNavBar">second</li>
+            <li class="phoneNavBar">third</li>
+            <li class="phoneNavBar">forth</li>
+            <li class="phoneNavBar">fifth</li>
+            <li class="phoneNavList fisrtOne">Poser une question à</li>
+            <li class="phoneNavList">azertyuiopqsdf</li>
+            <li class="phoneNavList">azertyuiopqsdf</li>
+            <li class="phoneNavList">azertyuiopqsdf</li>
+          </ul>
+        </div>
+      </div>
       <div class="boundTop">
         <ul class="navBar">
           <li>Poser une question à</li>
@@ -264,21 +277,22 @@
               id="postSearch"
               type="text"
               name=""
-              placeholder="Type to search"
+              placeholder="Type to search for a topic"
             />
 
-            <a class="search-btn" href="#" id="searchBtn"><i class="fas fa-search"></i></a>
+            <a class="search-btn" href="#" id="searchBtn"
+              ><i class="fas fa-search"></i
+            ></a>
           </form>
         </div>
-        <div class="horizontalNav">
-          <ul class="navList">
-            <li>first</li>
-            <li>second</li>
-            <li>third</li>
-            <li>forth</li>
-            <li class="lastLi">fifth</li>
-          </ul>
-        </div>
+
+        <ul class="navList">
+          <li>first</li>
+          <li>second</li>
+          <li>third</li>
+          <li>forth</li>
+          <li class="lastLi">fifth</li>
+        </ul>
       </div>
     </header>
     <main>
@@ -296,8 +310,13 @@
       </div>
     </main>
     <footer></footer>
-
+    <script>
+      let d = new Date();
+      document.querySelector("footer").innerHTML = `
+      <small>Copyright &copy;  ${d.getFullYear()} <a target="_blank" href="/"> Demo Website<a> . All rights reserved</small>`;
+    </script>
     <script src="./main.js"></script>
+    <script src="./createPost.js"></script>
     <script
       defer
       src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"
